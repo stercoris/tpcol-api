@@ -23,11 +23,11 @@ test("Schedule == lessons", async () => {
 test("Schedule == today replaces", async () => {
     const schedule_page = new SchedulePage(req);
     await schedule_page.ready;
-    expect(schedule_page.have_today_replaces).toBe(false);
+    expect(schedule_page.have_today_replaces).toBe(true);
 });
 
 test("Schedule == tomorrow replaces", async () => {
     const schedule_page = new SchedulePage(req);
     await schedule_page.ready;
-    expect(schedule_page.have_tomorrow_replaces).toBe(false);
+    expect(schedule_page.have_tomorrow_replaces).toBe(true);
 });

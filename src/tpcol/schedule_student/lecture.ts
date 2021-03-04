@@ -1,5 +1,4 @@
-interface Lecture
-{
+interface Lecture {
     id: number,
     title: string,
     teacher?: string
