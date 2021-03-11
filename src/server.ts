@@ -1,16 +1,24 @@
-import express, { Application } from "express";
-import { graphqlHTTP, OptionsData } from "express-graphql";
-import TPCRouter from "./tpcol";
+import "reflect-metadata";
+import express from "express";
+import { ApolloServer } from "apollo-server-express";
+import { buildSchema } from "type-graphql";
 
-const server: Application = express();
+import DailyScheduleResolver from "./resolvers/dailySchaduleResolver";
+
 
 (async () => {
-    // Запускаем TpcolASU API
-    const options: OptionsData = {
-        schema: TPCRouter,
-        graphiql: true,
-    };
-    server.use("/tpcol-api", graphqlHTTP(options));
-})();
+    const app = express();
 
-server.listen(5000, () => console.log("server run"));
+    const apolloServer = new ApolloServer({
+        schema: await buildSchema({
+            resolvers: [DailyScheduleResolver],
+        }),
+        context: ({ req, res }) => ({ req, res }),
+    });
+
+    apolloServer.applyMiddleware({ app, cors: false });
+
+    app.listen(4588, () => {
+        console.log("express server started");
+    });
+})();
