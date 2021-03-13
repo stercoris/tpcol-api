@@ -37,5 +37,6 @@ module.exports = {
         "max-classes-per-file": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "class-methods-use-this": "off",
+        "no-param-reassign": "off",
     },
 };
