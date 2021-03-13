@@ -1,8 +1,8 @@
 import { registerEnumType } from "type-graphql";
 
 enum WeekColor {
-    Green = "RED",
-    Red = "GREEN"
+    Green = 0,
+    Red = 1,
 }
 
 registerEnumType(WeekColor,
