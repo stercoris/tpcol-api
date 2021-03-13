@@ -4,21 +4,19 @@ import { JSDOM } from "jsdom";
 export default class Page {
     /**
      * Пробегаеца по каждой строчке в столбике в таблице в документе, записывая данные из оных
-     * @param doc страница (Document)
-     * @param table_n номер таблицы на странице
-     * @param column_n номер столбика на странице
+     * @param document страница (Document)
+     * @param tableNumber номер таблицы на странице
+     * @param columnNumber номер столбика на странице
      * @returns массив текстовых значений ячеек
      */
-    public static async getColumn(
-        doc: Document,
-        table_n: number,
-        column_n: number,
-    ): Promise<string[]> {
-        return new Promise<string[]>(async (resolve) => {
-            const path = `/html/body/table//tr[1]/td[2]/table[2]//tr[1]/td[2]/table//tr/td/table[${table_n}]//tr/td[2]/table//tr[1]/td[2]/table//tr[position()>1]/td[${column_n}]`;
-            const table = await Page.getByXPath(doc, path);
-            resolve(table);
-        });
+    public static getColumn(
+        document: Document,
+        tableNumber: number,
+        columnNumber: number,
+    ): string[] {
+        const path = `/html/body/table//tr[1]/td[2]/table[2]//tr[1]/td[2]/table//tr/td/table[${tableNumber}]//tr/td[2]/table//tr[1]/td[2]/table//tr[position()>1]/td[${columnNumber}]`;
+        const table = Page.getByXPath(document, path);
+        return (table);
     }
 
     /**
@@ -38,8 +36,8 @@ export default class Page {
                 headers: { "Content-Type": "application/x-www-form-urlencoded;" },
             });
             const jsdom: JSDOM = new JSDOM();
-            const dom_parser: DOMParser = new jsdom.window.DOMParser();
-            const doc: Document = dom_parser.parseFromString(await response.textConverted(), "text/html");
+            const domParser: DOMParser = new jsdom.window.DOMParser();
+            const doc: Document = domParser.parseFromString(await response.textConverted(), "text/html");
             resolve(doc);
         });
     }
@@ -50,25 +48,23 @@ export default class Page {
      * @param xpath путь к элементу в формате XPath
      * @returns элементы по xpath'у
      */
-    public static async getByXPath(
+    public static getByXPath(
         document: Document,
         xpath: string,
-    ): Promise<string[]> {
-        return new Promise<string[]>(async (resolve) => {
-            const node_values: string[] = [];
-            const nodes = document.evaluate(
-                xpath,
-                document,
-                null,
-                0,
-                null,
-            );
-            let node_value: string | null | undefined;
-            while (node_value = nodes.iterateNext()?.textContent) {
-                node_values.push(node_value);
-            }
-            resolve(node_values);
-        });
+    ): string[] {
+        const nodeValues: string[] = [];
+        const nodes = document.evaluate(
+            xpath,
+            document,
+            null,
+            0,
+            null,
+        );
+        let nodeValue: string | null | undefined;
+        while (nodeValue = nodes.iterateNext()?.textContent) {
+            nodeValues.push(nodeValue.replace(/\s+/g, " "));
+        }
+        return (nodeValues!);
     }
 }
 
