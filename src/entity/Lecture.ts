@@ -9,5 +9,5 @@ export default class Lecture {
     title: string;
 
     @Field(() => String, { nullable: true })
-    teacher: string;
+    teacher?: string;
 }
