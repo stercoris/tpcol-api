@@ -8,18 +8,19 @@ import {
 } from "type-graphql";
 import DailySchedule from "../entity/DailySchedule";
 import WeekColor from "../entity/WeekColor";
-
+import WeekDays from "../entity/WeekDays";
+import StudentPage from "../tpcol/exports";
 
 @InputType()
 class DailyScheduleRequest {
     @Field(() => Int)
     group: number;
 
-    @Field(() => Int)
-    day: number;
+    @Field(() => WeekDays, { nullable: true })
+    day?: WeekDays;
 
-    @Field(() => WeekColor)
-    week: WeekColor;
+    @Field(() => WeekColor, { nullable: true })
+    weekColor?: WeekColor;
 }
 
 @Resolver()
@@ -28,8 +29,12 @@ export default class DailyScheduleResolver {
     async DailySchedule(
         @Arg("params", () => DailyScheduleRequest, { nullable: false }) request: DailyScheduleRequest,
     ) {
-        let schedule;
-
-        return (schedule);
+        const studentPage = new StudentPage();
+        await studentPage.init(
+            request.group,
+            request.day,
+            request.weekColor,
+        );
+        return (studentPage.getLessonsWithReplacements());
     }
 }
