@@ -4,6 +4,7 @@ import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 
 import DailyScheduleResolver from "./resolvers/DailyScheduleResolver";
+import ExamsResolver from "./resolvers/ExamsResolver";
 
 const PORT = 4588;
 
@@ -12,7 +13,7 @@ const PORT = 4588;
 
     const apolloServer = new ApolloServer({
         schema: await buildSchema({
-            resolvers: [DailyScheduleResolver],
+            resolvers: [DailyScheduleResolver, ExamsResolver],
         }),
         context: ({ req, res }) => ({ req, res }),
     });
