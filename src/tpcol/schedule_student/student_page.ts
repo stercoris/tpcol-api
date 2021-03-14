@@ -39,7 +39,7 @@ class StudentPage {
 
         this.weekColor = weekColor;
         this.document = await SchedulePage.getPage(TPCPages.ScheduleByGroups, args);
-        this.replaces = SchedulePage.getReplaces(this.document);
+        this.replaces = SchedulePage.getStatus(this.document);
     }
 
     public getLessonsWithReplacements(): DailySchedule {

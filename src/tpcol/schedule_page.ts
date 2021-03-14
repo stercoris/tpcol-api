@@ -5,7 +5,7 @@ import Page from "./page";
 import Replacement from "../entity/group/Replacement";
 
 class SchedulePage extends Page {
-    public static getReplaces(page: Document): GroupStatus {
+    public static getStatus(page: Document): GroupStatus {
         const replaces: GroupStatus = {
             DayLessons: {
                 exist: true,
@@ -94,7 +94,6 @@ class SchedulePage extends Page {
                 } as Replacement,
             ),
         );
-        console.log(lectures);
         return (lectures);
     }
 
