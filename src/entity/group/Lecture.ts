@@ -10,4 +10,7 @@ export default class Lecture {
 
     @Field(() => String, { nullable: true })
     teacher?: string;
+
+    @Field(() => String, { nullable: false })
+    cabinet: string;
 }
