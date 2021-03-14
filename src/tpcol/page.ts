@@ -7,14 +7,16 @@ export default class Page {
      * @param document страница (Document)
      * @param tableNumber номер таблицы на странице
      * @param columnNumber номер столбика на странице
+     * @param queryPostfix дополнительный постфикс запроса
      * @returns массив текстовых значений ячеек
      */
     public static getColumn(
         document: Document,
         tableNumber: number,
         columnNumber: number,
+        queryPostfix = "",
     ): string[] {
-        const path = `/html/body/table//tr[1]/td[2]/table[2]//tr[1]/td[2]/table//tr/td/table[${tableNumber}]//tr/td[2]/table//tr[1]/td[2]/table//tr[position()>1]/td[${columnNumber}]`;
+        const path = `/html/body/table//tr[1]/td[2]/table[2]//tr[1]/td[2]/table//tr/td/table[${tableNumber}]//tr/td[2]/table//tr[1]/td[2]/table//tr[position()>1]/td[${columnNumber}]${queryPostfix}`;
         const table = Page.getByXPath(document, path);
         return (table);
     }

@@ -1,19 +1,20 @@
-import DailySchedule from "../../entity/DailySchedule";
-import Lecture from "../../entity/Lecture";
-import Replaces from "../../entity/Replaces";
+import DailySchedule from "../../entity/group/DailySchedule";
+import Lecture from "../../entity/group/Lecture";
+import GroupStatus from "../../entity/group/GroupStatus";
 import WeekColor from "../../entity/WeekColor";
 import WeekDays from "../../entity/WeekDays";
 import { TPCPages } from "../page";
 import SchedulePage from "../schedule_page";
+import Replacement from "../../entity/group/Replacement";
 
 class StudentPage {
     private document: Document;
 
     private weekColor: WeekColor;
 
-    private replaces: Replaces;
+    private replaces: GroupStatus;
 
-    private day: WeekDays;
+    private requestedDay: WeekDays;
 
     public async init(
         group: number,
@@ -27,7 +28,7 @@ class StudentPage {
             day = new Date().getDay();
         }
         args.append("day", day.toString());
-        this.day = day;
+        this.requestedDay = day;
 
         if (!weekColor) {
             weekColor = SchedulePage.getWeekColor(
@@ -43,36 +44,44 @@ class StudentPage {
 
     public getLessonsWithReplacements(): DailySchedule {
         const schedule: DailySchedule = {
-            lectures: this.replaces.Lessons,
+            lectures: [...this.replaces.DayLessons.lectures],
             weekcolor: this.weekColor,
+            status: this.replaces,
         };
-        if (!this.replaces.haveLessons
-            && !this.replaces.haveTodayReplaces
-            && !this.replaces.haveTomorrowReplaces) {
+        if (!this.replaces.DayLessons.exist
+            && !this.replaces.TodayReplaces.exist
+            && !this.replaces.TomorrowReplaces.exist) {
             return (schedule);
         }
-        if (this.replaces.haveTodayReplaces && this.day === new Date().getDay()) {
+
+        const Today = new Date().getDay();
+        const Tomorrow = Today + 1;
+
+        if (this.replaces.TodayReplaces.exist
+            && this.requestedDay === Today
+        ) {
             schedule.lectures = StudentPage.mergeReplaces(
-                this.replaces.Lessons,
-                this.replaces.TodayReplaces,
+                this.replaces.DayLessons.lectures,
+                this.replaces.TodayReplaces.lectures,
             );
-        } else if (this.replaces.haveTomorrowReplaces && this.day === new Date().getDay() + 1) {
+        } else if (this.replaces.TomorrowReplaces.exist && this.requestedDay === Tomorrow
+        ) {
             schedule.lectures = StudentPage.mergeReplaces(
-                this.replaces.Lessons,
-                this.replaces.TomorrowReplaces,
+                this.replaces.DayLessons.lectures,
+                this.replaces.TomorrowReplaces.lectures,
             );
         }
         return (schedule);
     }
 
-    private static mergeReplaces(lessons: Lecture[], replaces: Lecture[]) {
+    private static mergeReplaces(lessons: Lecture[], replaces: Replacement[]) {
         replaces.map((replace) => {
-            const { id, title } = replace;
+            const { id, title: lectureToTitle } = replace;
             const repLecture = lessons.findIndex((lesson) => lesson.id === id);
             if (repLecture !== -1) {
-                lessons[repLecture].title = title;
+                lessons[repLecture].title = lectureToTitle;
             } else {
-                lessons.push(replace);
+                lessons.push(replace as Lecture);
             }
             return (replace);
         });

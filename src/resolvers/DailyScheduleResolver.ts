@@ -6,7 +6,7 @@ import {
     InputType,
     Field,
 } from "type-graphql";
-import DailySchedule from "../entity/DailySchedule";
+import DailySchedule from "../entity/group/DailySchedule";
 import WeekColor from "../entity/WeekColor";
 import WeekDays from "../entity/WeekDays";
 import StudentPage from "../tpcol/exports";
