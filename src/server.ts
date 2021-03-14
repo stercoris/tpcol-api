@@ -3,8 +3,9 @@ import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 
-import DailyScheduleResolver from "./resolvers/dailySchaduleResolver";
+import DailyScheduleResolver from "./resolvers/DailyScheduleResolver";
 
+const PORT = 4588;
 
 (async () => {
     const app = express();
@@ -18,7 +19,12 @@ import DailyScheduleResolver from "./resolvers/dailySchaduleResolver";
 
     apolloServer.applyMiddleware({ app, cors: false });
 
-    app.listen(4588, () => {
-        console.log("express server started");
+    app.listen(PORT, () => {
+        // eslint-disable-next-line no-console
+        console.log(`
+        express server STARTED
+        on port ${PORT}
+        url = http://localhost:${PORT}/graphql
+        `);
     });
 })();
