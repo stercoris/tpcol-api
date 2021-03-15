@@ -74,18 +74,18 @@ class StudentPage {
         return (schedule);
     }
 
-    private static mergeReplaces(lessons: Lecture[], replaces: Replacement[]) {
-        replaces.map((replace) => {
+    private static mergeReplaces(lectures: Lecture[], replaces: Replacement[]) {
+        const main = lectures.map((obj) => ({ ...obj }));
+        replaces.forEach((replace) => {
             const { id, title: lectureToTitle } = replace;
-            const repLecture = lessons.findIndex((lesson) => lesson.id === id);
+            const repLecture = main.findIndex((lesson) => lesson.id === id);
             if (repLecture !== -1) {
-                lessons[repLecture].title = lectureToTitle;
+                main[repLecture].title = lectureToTitle;
             } else {
-                lessons.push(replace as Lecture);
+                main.push(replace as Lecture);
             }
-            return (replace);
         });
-        return (lessons);
+        return (main);
     }
 }
 
