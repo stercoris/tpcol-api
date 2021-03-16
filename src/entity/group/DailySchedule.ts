@@ -5,12 +5,12 @@ import GroupStatus from "./GroupStatus";
 
 @ObjectType()
 export default class DailySchedule {
-    @Field(() => WeekColor, { nullable: false })
-    weekcolor: WeekColor;
+  @Field(() => WeekColor, { nullable: false })
+  weekcolor: WeekColor;
 
-    @Field(() => [Lecture], { nullable: true })
-    lectures: Lecture[];
+  @Field(() => [Lecture], { nullable: true })
+  lectures: Lecture[];
 
-    @Field(() => GroupStatus, { nullable: true })
-    status: GroupStatus;
+  @Field(() => GroupStatus, { nullable: true })
+  status: GroupStatus;
 }

@@ -4,12 +4,12 @@ import ReplaceTable from "./ReplaceTable";
 
 @ObjectType()
 export default class GroupStatus {
-    @Field(() => LectureTable, { nullable: false })
-    DayLessons: LectureTable;
+  @Field(() => LectureTable, { nullable: false })
+  DayLessons: LectureTable;
 
-    @Field(() => ReplaceTable, { nullable: false })
-    TodayReplaces: ReplaceTable;
+  @Field(() => ReplaceTable, { nullable: false })
+  TodayReplaces: ReplaceTable;
 
-    @Field(() => ReplaceTable, { nullable: false })
-    TomorrowReplaces: ReplaceTable;
+  @Field(() => ReplaceTable, { nullable: false })
+  TomorrowReplaces: ReplaceTable;
 }
