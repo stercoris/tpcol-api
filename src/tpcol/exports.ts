@@ -1,4 +1,4 @@
 import ExamsPage from "./exams_page";
-import StudentPage from "./schedule_student/student_page";
+import StudentPage from "./schedule/student/parser";
 
 export { StudentPage, ExamsPage };

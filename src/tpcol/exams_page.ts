@@ -2,14 +2,14 @@ import Exam from "../entity/exam/Exam";
 import Page, { TPCPages } from "./page";
 
 export default class ExamsPage {
-  document: Document;
+  Document: Document;
 
   exams: Exam[];
 
   public async init(group: number) {
     const args = new URLSearchParams();
     args.append("group", group.toString());
-    this.document = await Page.getPage(TPCPages.Exams, args);
+    this.Document = await Page.getPage(TPCPages.Exams, args);
     this.exams = this.getExams();
   }
 
@@ -18,10 +18,10 @@ export default class ExamsPage {
 
     const getColumn = (column: number) =>
       `/html/body/table//tr[1]/td[2]/table[2]//tr[1]/td[2]/table//tr/td/table[2]//tr[position()>1]/td[${column}]/text()`;
-    const dates = Page.getByXPath(this.document, getColumn(1));
-    const professions = Page.getByXPath(this.document, getColumn(2));
-    const teachers = Page.getByXPath(this.document, getColumn(3));
-    const cabinets = Page.getByXPath(this.document, getColumn(4));
+    const dates = Page.getByXPath(this.Document, getColumn(1));
+    const professions = Page.getByXPath(this.Document, getColumn(2));
+    const teachers = Page.getByXPath(this.Document, getColumn(3));
+    const cabinets = Page.getByXPath(this.Document, getColumn(4));
 
     dates.forEach((date, i) => {
       exams.push({

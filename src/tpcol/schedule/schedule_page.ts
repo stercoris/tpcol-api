@@ -1,5 +1,5 @@
-import WeekColor from "../entity/WeekColor";
-import Page from "./page";
+import WeekColor from "../../entity/WeekColor";
+import Page from "../page";
 
 class SchedulePage extends Page {
   public static getWeekColor(page: Document) {

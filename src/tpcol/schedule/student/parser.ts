@@ -1,11 +1,11 @@
-import DailySchedule from "../../entity/group/DailySchedule";
-import Lecture from "../../entity/group/Lecture";
-import GroupStatus from "../../entity/group/GroupStatus";
-import WeekColor from "../../entity/WeekColor";
-import WeekDays from "../../entity/WeekDays";
-import { TPCPages } from "../page";
+import DailySchedule from "../../../entity/group/DailySchedule";
+import Lecture from "../../../entity/group/Lecture";
+import GroupStatus from "../../../entity/group/GroupStatus";
+import WeekColor from "../../../entity/WeekColor";
+import WeekDays from "../../../entity/WeekDays";
+import { TPCPages } from "../../page";
 import SchedulePage from "../schedule_page";
-import Replacement from "../../entity/group/Replacement";
+import Replacement from "../../../entity/group/Replacement";
 
 class StudentPage {
   private document: Document;
