@@ -34,16 +34,16 @@ export default class GroupsPage extends ExamsPage {
     return groups;
   }
 
-  public GetGroupByName(name: string): Group {
+  public GetGroupByName(checkName: string): Group {
     const probGroups: Group[] = [];
+    checkName = checkName.toLowerCase();
     this.Groups.forEach((group) => {
-      const [prefix, postfix] = group.name.split("-");
-      if (name.includes(prefix) && name.includes(postfix)) {
+      const [prefix, postfix] = group.name.toLowerCase().split("-");
+      if (checkName.includes(prefix) && checkName.includes(postfix)) {
         probGroups.push(group);
       }
     });
 
-    console.warn(probGroups);
     const foundedGroup = probGroups.reduce((prev, group) =>
       prev.name.length > group.name.length ? prev : group
     );
