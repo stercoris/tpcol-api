@@ -6,7 +6,7 @@ enum WeekColor {
 }
 
 registerEnumType(WeekColor, {
-  name: "WeecColor",
+  name: "WeekColor",
   description: "Red or Green",
 });
 

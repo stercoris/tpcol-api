@@ -3,6 +3,8 @@ import DailySchedule from "../entity/group/DailySchedule";
 import WeekColor from "../entity/WeekColor";
 import WeekDays from "../entity/WeekDays";
 import { StudentPage } from "../tpcol/exports";
+import { TPCPages } from "../tpcol/page";
+import SchedulePage from "../tpcol/schedule/schedule_page";
 
 @InputType()
 class DailyScheduleRequest {
@@ -26,5 +28,12 @@ export default class DailyScheduleResolver {
     const studentPage = new StudentPage();
     await studentPage.init(request.group, request.day, request.weekColor);
     return studentPage.getLessonsWithReplacements();
+  }
+
+  @Query(() => WeekColor)
+  async WeekColor() {
+    return SchedulePage.getWeekColor(
+      await SchedulePage.getPage(TPCPages.ScheduleByGroups)
+    );
   }
 }
